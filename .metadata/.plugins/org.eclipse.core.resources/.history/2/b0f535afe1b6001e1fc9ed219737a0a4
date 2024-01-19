@@ -1,0 +1,39 @@
+package application;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+
+import db.DB;
+
+public class Program {
+
+	public static void main(String[] args) {
+		
+		// inserir dados no db
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		Connection conn = null;
+		PreparedStatement st = null; // Monta consulta SQL e permite colocar os argumentos depois
+		try {
+			conn = DB.getConnetion();
+			
+			st = conn.prepareStatement(
+					"Insert Into seller "
+					+ "(Name, Email, BirthDate, BaseSalary, DepartmentId)"
+					+ "VALUES "
+					+"(?,?,?,?,?)");
+			
+			st.setString(1, "Carl Purple");
+			st.setString(2, "carl@gmail.com");
+			st.setDate(3, new java.sql.Date(sdf.parse("22/04/1985")); // para instanciar data no JDBC e jogar no PreparedStatement nao pode usar o java.util
+			
+		}
+		
+	}
+}
+
+// Statement.RETURN_GENERATED_KEYS Permite recuperar Id do novo obejto inserido
